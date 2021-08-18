@@ -1,7 +1,8 @@
-
+```
 初始文件为"git clone -b v3.0.0 --depth 1 https://github.com/substrate-developer-hub/substrate-node-template"  
 
 此库用于做进阶课作业。参考视频基础课5-3以及进阶课1-1。
+```
 
 # Substrate Node Template
 
