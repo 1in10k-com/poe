@@ -3525,6 +3525,7 @@ dependencies = [
  "pallet-aura",
  "pallet-balances",
  "pallet-grandpa",
+ "pallet-poe",
  "pallet-randomness-collective-flip",
  "pallet-sudo",
  "pallet-template",
@@ -3761,6 +3762,7 @@ dependencies = [
  "sp-core",
  "sp-io",
  "sp-runtime",
+ "sp-std",
 ]
 
 [[package]]
