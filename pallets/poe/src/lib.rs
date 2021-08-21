@@ -35,7 +35,7 @@ pub mod pallet {
     #[pallet::generate_deposit(pub(super) fn deposit_event)] //使用此宏生成一个帮助性方法deposit event，可以很方便的进行event触发
 
     pub enum Event<T: Config> {
-        ClaimCreated(T::AccountId, Vec<u8>),
+        ClaimCreated(T::AccountId, Vec<u8>), //r1
         ClaimRevoked(T::AccountId, Vec<u8>),
     }
 
@@ -58,21 +58,27 @@ pub mod pallet {
             claim: Vec<u8>,       //存证哈希值
         ) -> DispatchResultWithPostInfo //定义创建存证的可调用函数，result类型别名 zzzz
         {
-            let sender = ensure_signed(origin)?;
+            let sender = ensure_signed(origin)?; //校验当前发送方是否签名，完成后获取发送方的account id给sender
 
             ensure!(
                 !Proofs::<T>::contains_key(&claim),
                 Error::<T>::ProofAlreadyExist
             );
+            //确认记录里并不存在此存证,否则返回错误ProofAlreadyExist. 使用proofs存储单元的contains_key方法给定key去判断存储单元里面
+            //也就是storagemap里是不是包含这个key所对应的记录 zzzz 1214
 
             Proofs::<T>::insert(
                 &claim,
                 (sender.clone(), frame_system::Pallet::<T>::block_number()),
             );
+            //校验完成后调用存储单元proofs上的insert方法存储相关记录, key是claim,表示存证的哈希值,val是两元素组成的tuple,第一元素是交易发送方的sender,也是存证的owner,
+            //第二元素是区块,使用system模块提供的blocknumber这个公共方法来获取当前的区块.
 
             Self::deposit_event(Event::ClaimCreated(sender, claim));
+            //s1,保存成功后触发事件,在之前event定义时定义了一个帮助方法deposit event可以用来触发事件.此处定义了一个Event叫ClaimCreated,此时在r1添加对应信息.
 
             Ok(().into())
+            //返回结果,是result类型,并且进行转换.
         }
 
         #[pallet::weight(0)]
