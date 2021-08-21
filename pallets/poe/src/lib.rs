@@ -31,18 +31,19 @@ pub mod pallet {
         StorageMap<_, Blake2_128Concat, Vec<u8>, (T::AccountId, T::BlockNumber)>; //存储单元Proofs用来存储存证，类型为StorageMap，key是Vec u8，表示存证的hash值。key 对应的value是(T::AccountId, T::BlockNumber) tuple。其两个元素前者表示用户id，后者表示存入时的区块，这两个类型都来自于系统模块。
 
     #[pallet::event] //使用这个宏定义event的枚举类型
-    #[pallet::metadata(T::AccountId = "AccountId")]
+    #[pallet::metadata(T::AccountId = "AccountId")] 
+    //我们有类型信息T::accountID,我们需要告诉客户端它在前端对应的类型信息. 这里转换为了AccountId 这个可以被前端识别的类型. 1646 zzzz
     #[pallet::generate_deposit(pub(super) fn deposit_event)] //使用此宏生成一个帮助性方法deposit event，可以很方便的进行event触发
 
     pub enum Event<T: Config> {
         ClaimCreated(T::AccountId, Vec<u8>), //r1
-        ClaimRevoked(T::AccountId, Vec<u8>),
+        ClaimRevoked(T::AccountId, Vec<u8>), 
     }
 
     #[pallet::error]
     pub enum Error<T> {
         ProofAlreadyExist,
-        ClaimNotExist,
+        ClaimNotExist, //r2
         NotClaimOwner,
     }
 
@@ -86,8 +87,12 @@ pub mod pallet {
             let sender = ensure_signed(origin)?;
 
             let (owner, _) = Proofs::<T>::get(&claim).ok_or(Error::<T>::ClaimNotExist)?;
+            //校验当前存储里存在此值,否则就不用撤销,会返回一个错误claimnotexist.
+            //ok or是option上的方法,因为get方法返回一个option.如果是none,则返回错误ClaimNotExist.如果有值,用?操作符把值取出来赋值.
+            //s2,存储的是两元素组成的tuple,第一个是owner,第二个用不到. 在r2,定义错误
 
             ensure!(owner == sender, Error::<T>::NotClaimOwner);
+            //校验当前交易发送方是否是proof的owner,是才允许吊销,不是则发出错误NotClaimOwner
 
             Proofs::<T>::remove(&claim);
 
