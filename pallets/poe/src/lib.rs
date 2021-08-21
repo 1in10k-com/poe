@@ -4,10 +4,12 @@
 pub use pallet::*;
 // eee,需要把对应的数据类型都暴露出来.把pallet模块里定义的功能组件都暴露出来.从而可以在runtime里引用.
 
-#[cfg(test)]
+#[cfg(test)]   
 mod mock;
 #[cfg(test)]
 mod tests;
+///eee,为了让测试包含在源代码目录里,添加模块定义.引入mock和test模块.因为是专门用来测试的,所以加上编译标签 cfg(test),这样只有在测试时才会对它进行编译.
+///此时测试用例tests.rs还是空的,但教程进行了cargo test -p pallet-poe.结果为通过.0756
 
 #[frame_support::pallet]
 pub mod pallet {

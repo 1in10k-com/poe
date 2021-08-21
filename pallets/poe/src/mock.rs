@@ -21,6 +21,9 @@ frame_support::construct_runtime!(
         PoeModule: pallet_poe::{Module, Call, Storage, Event<T>},
     }
 );
+//aaa,拷贝template中的mock到这里并修改名字。进阶课1-1 0537  
+//这里使用construct_runtime在测试代码里构造了一个测试用的runtime Test. 它只有两个模块,一个是系统模块System,一个是我们想测试的模块PoeModule.
+
 
 parameter_types! {
     pub const BlockHashCount: u64 = 250;
@@ -28,6 +31,7 @@ parameter_types! {
 }
 
 impl system::Config for Test {
+    //bbb,这里为测试用的runtime Test实现了系统模块的Config接口.为一些不需要使用的类型使用了空的tuple(以下4个)
     type BaseCallFilter = ();
     type BlockWeights = ();
     type BlockLength = ();
@@ -53,6 +57,7 @@ impl system::Config for Test {
 }
 
 impl pallet_poe::Config for Test {
+    //ccc,为poe模块实现Config接口.
     type Event = Event;
 }
 
@@ -63,3 +68,4 @@ pub fn new_test_ext() -> sp_io::TestExternalities {
         .unwrap()
         .into()
 }
+//ddd,这个帮助方法构造了一个测试用的链上环境并初始化一些创世配置 0636
