@@ -2,6 +2,7 @@
 
 /// A module for proof of existence
 pub use pallet::*;
+// eee,需要把对应的数据类型都暴露出来.把pallet模块里定义的功能组件都暴露出来.从而可以在runtime里引用.
 
 #[cfg(test)]
 mod mock;
@@ -12,7 +13,7 @@ mod tests;
 pub mod pallet {
     use frame_support::{dispatch::DispatchResultWithPostInfo, pallet_prelude::*};
     use frame_system::pallet_prelude::*;
-    use sp_std::vec::Vec;
+    use sp_std::vec::Vec; //ggg,在源代码里添加对应的依赖. 此时就能成功编译了,2056
 
     #[pallet::config]
     pub trait Config: frame_system::Config {

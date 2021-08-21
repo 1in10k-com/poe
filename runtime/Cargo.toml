@@ -26,7 +26,9 @@ serde = { features = ['derive'], optional = true, version = '1.0.119' }
 
 # local dependencies
 pallet-template = { path = '../pallets/template', default-features = false, version = '3.0.0' }
-pallet-poe = { path = '../pallets/poe', default-features = false, version = '3.0.0' }
+pallet-poe = { path = '../pallets/poe', default-features = false, version = '3.0.0' } 
+### aaa,之前的commit已经完成创建和吊销模块,现在要在runtime里引入. 
+### 此时是在cargo里引入相关依赖
 
 # Substrate dependencies
 frame-benchmarking = { default-features = false, optional = true, version = '3.0.0' }
@@ -81,6 +83,7 @@ std = [
     'pallet-sudo/std',
     'pallet-template/std',
     'pallet-poe/std',
+    ### bbb,需要添加一些编译的标签,因为poe模块并没有benchmarks信息,所以不需要添加在runtime-benchmarks,但在std模块里引入poe模块的依赖.
     'pallet-timestamp/std',
     'pallet-transaction-payment/std',
     'pallet-transaction-payment-rpc-runtime-api/std',
