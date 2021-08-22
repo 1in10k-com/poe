@@ -4,7 +4,7 @@
 pub use pallet::*;
 // eee,需要把对应的数据类型都暴露出来.把pallet模块里定义的功能组件都暴露出来.从而可以在runtime里引用.
 
-#[cfg(test)]   
+#[cfg(test)]
 mod mock;
 #[cfg(test)]
 mod tests;

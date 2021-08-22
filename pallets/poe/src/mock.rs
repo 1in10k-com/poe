@@ -21,9 +21,8 @@ frame_support::construct_runtime!(
         PoeModule: pallet_poe::{Module, Call, Storage, Event<T>},
     }
 );
-//aaa,拷贝template中的mock到这里并修改名字。进阶课1-1 0537  
+//aaa,拷贝template中的mock到这里并修改名字。进阶课1-1 0537
 //这里使用construct_runtime在测试代码里构造了一个测试用的runtime Test. 它只有两个模块,一个是系统模块System,一个是我们想测试的模块PoeModule.
-
 
 parameter_types! {
     pub const BlockHashCount: u64 = 250;
