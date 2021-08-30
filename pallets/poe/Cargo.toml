@@ -11,7 +11,6 @@ version = '3.0.0'
 [package.metadata.docs.rs]
 targets = ['x86_64-unknown-linux-gnu']
 
-# alias "parity-scale-code" to "codec"
 [dependencies.codec]
 default-features = false
 features = ['derive']
@@ -21,7 +20,7 @@ version = '2.0.0'
 [dependencies]
 frame-support = {default-features = false, version = '3.0.0'}
 frame-system = {default-features = false, version = '3.0.0'}
-sp-std = {default-features = false, version = '3.0.0'}### fff,此时build会报vec u8 not found错误,因为vector需要额外引入,所以在这里引入sp-std这个包含vector的工具包. 
+sp-std = {default-features = false, version = '3.0.0'}
 
 [dev-dependencies]
 serde = {version = "1.0.119"}
